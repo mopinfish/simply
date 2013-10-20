@@ -31,6 +31,11 @@ abstract class Application
     protected $_dbManager;
 
     /**
+     * ログイン用コントローラ/アクションのセット
+     */
+    protected $_loginAction = array();
+
+    /**
      * コンストラクタ
      */
     public function __construct($debug = false)
@@ -173,6 +178,9 @@ abstract class Application
             $this->runAction($controller, $action, $params);
         } catch (HttpNotFoundException $e) {
             $this->render404Page($e);
+        } catch (UnauthorizedActionException $e) {
+            list($controller, $action) = $this->_loginAction;
+            $this->runAction)$controller, $action);
         }
 
         $this->_response->send();
