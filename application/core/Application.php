@@ -180,7 +180,7 @@ abstract class Application
             $this->render404Page($e);
         } catch (UnauthorizedActionException $e) {
             list($controller, $action) = $this->_loginAction;
-            $this->runAction)$controller, $action);
+            $this->runAction($controller, $action);
         }
 
         $this->_response->send();
