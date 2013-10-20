@@ -33,7 +33,7 @@ class Session
     /**
      * セッションの値を取得
      */
-    public function set($name, $default = null)
+    public function get($name, $default = null)
     {
         if (isset($_SESSION[$name])) {
             return $_SESSION[$name];
@@ -72,6 +72,7 @@ class Session
      * セッションをログイン状態に設定
      */
     public function setAuthenticated($bool)
+    {
         $this->set('__authenticated', (bool)$bool);
         $this->regenerate();
     }

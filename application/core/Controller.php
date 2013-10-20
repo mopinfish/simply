@@ -69,7 +69,7 @@ abstract class Controller
             $this->forward404();
         }
 
-        $content = $this->$actionMehtod($params);
+        $content = $this->{$actionMethod}($params);
         return $content;
     }
 
@@ -90,7 +90,7 @@ abstract class Controller
             $template = $this->_actionName;
         }
         $path = $this->_controllerName . '/' . $template;
-        return $view->render($path, $valiables, $layout)
+        return $view->render($path, $valiables, $layout);
     }
 
     /**
@@ -154,7 +154,7 @@ abstract class Controller
      */
     public function needsAuthentication($action)
     {
-        if ($this->_authActions === true || (is_array($this->_authActions) && in_array($action, $this->_authActions)) {
+        if ($this->_authActions === true || (is_array($this->_authActions) && in_array($action, $this->_authActions))) {
             return true;
         }
         return false;

@@ -24,7 +24,6 @@ class Router
     public function compileRoutes($definitions)
     {
         $routes = array();
-
         foreach ($definitions as $url => $params) {
             $tokens = explode('/', ltrim($url, '/'));
             foreach ($tokens as $i => $token) {
@@ -51,7 +50,7 @@ class Router
         }
 
         foreach ($this->routes as $pattern => $params) {
-            if (preg_match('#^' . $patternn . '$#', $pathInfo, $matches)) {
+            if (preg_match('#^' . $pattern . '$#', $pathInfo, $matches)) {
                 $params = array_merge($params, $matches);
                 return $params;
             }

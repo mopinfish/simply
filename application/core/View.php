@@ -34,7 +34,7 @@ class View
     /**
      * ビューの描画
      */
-    public function render($path, $valiables = array, $layout = false)
+    public function render($path, $valiables = array(), $layout = false)
     {
         $file = $this->_baseDir . $path . '.php';
         extract(array_merge($this->_defaults, $valiables));
@@ -43,7 +43,7 @@ class View
         ob_implicit_flush(0);
 
         require $file;
-        $content = ob_get_cleean();
+        $content = ob_get_clean();
         if ($layout) {
             $content = $this->render($layout, array_merge($this->_layoutValiables, array(
                     '_content' => $content

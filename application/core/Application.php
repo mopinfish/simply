@@ -126,7 +126,7 @@ abstract class Application
      */
     public function getDbManager()
     {
-        return $this->dbManager;
+        return $this->_dbManager;
     }
 
     /**
@@ -192,9 +192,9 @@ abstract class Application
     public function runAction($controllerName, $action, $params = array())
     {
         $controllerClass = ucfirst($controllerName) . 'Controller';
-        $controller = $this->findController($controllerClass,);
+        $controller = $this->findController($controllerClass);
         if ($controller === false) {
-            throw new HttpNotFoundException($controllerClass . ' controller is not found.'));
+            throw new HttpNotFoundException($controllerClass . ' controller is not found.');
         }
 
         $content = $controller->run($action, $params);
@@ -208,7 +208,7 @@ abstract class Application
     {
         // クラスが存在しなければファイルを読み込む
         if (!class_exists($controllerClass)) {
-            $controllerFile = $this->getControllerDir . '/' . $controllerClass . '.php';
+            $controllerFile = $this->getControllerDir() . '/' . $controllerClass . '.php';
             if (!is_readable($controllerFile)) {
                 return false;
             } else {
