@@ -66,6 +66,9 @@ class DbManager
         return $this->repositories[$repositoryName];
     }
 
+    /**
+     * コネクション解放処理
+     */
     public function __destruct()
     {
         foreach ($this->repositories as $repository) {
