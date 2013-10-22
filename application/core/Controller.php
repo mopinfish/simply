@@ -76,7 +76,7 @@ abstract class Controller
     /**
      * ビューの描画を行う
      */
-    public function render($valiables = array(), $template = null, $layout = 'layout')
+    public function pureRender($valiables = array(), $template = null, $layout = 'layout')
     {
         $defaults = array(
             'request' => $this->_request,
@@ -91,6 +91,13 @@ abstract class Controller
         }
         $path = $this->_controllerName . '/' . $template;
         return $view->render($path, $valiables, $layout);
+    }
+
+    /**
+     * ビューの描画をTwigによって行う
+     */
+    public function render($template = null, $valiables = array())
+    {
     }
 
     /**
