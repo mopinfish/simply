@@ -41,6 +41,11 @@ abstract class Controller
     protected $_dbManager;
 
     /**
+     * Twigオブジェクト
+     */
+    protected $_twig;
+
+    /**
      * ログイン必須アクションリスト
      */
     protected $_authActions;
@@ -56,6 +61,7 @@ abstract class Controller
         $this->_response = $application->getResponse();
         $this->_session = $application->getSession();
         $this->_dbManager = $application->getDbManager();
+        $this->_twig = $application->getTwig();
     }
 
     /**
@@ -96,8 +102,22 @@ abstract class Controller
     /**
      * ビューの描画をTwigによって行う
      */
-    public function render($template = null, $valiables = array())
+    public function render($valiables = array(), $template = null)
     {
+        $templateSuffix = '.html.twig';
+
+        $defaults = array(
+            'request' => $this->_request,
+            'baseUrl' => $this->_request->getBaseUrl(),
+            'session' => $this->_session
+        );
+
+        if (is_null($template)) {
+            $template = $this->_actionName;
+        }
+        $path = $this->_controllerName . '/' . $template . $templateSuffix;
+
+        return $this->_twig->loadTemplate($path)->render(array_merge($defaults, $valiables));
     }
 
     /**

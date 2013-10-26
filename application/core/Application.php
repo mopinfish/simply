@@ -31,6 +31,11 @@ abstract class Application
     protected $_dbManager;
 
     /**
+     * Twigオブジェクト
+     */
+    protected $_twig;
+
+    /**
      * ログイン用コントローラ/アクションのセット
      */
     protected $_loginAction = array();
@@ -70,6 +75,11 @@ abstract class Application
         $this->_session = new Session();
         $this->_dbManager = new DbManager();
         $this->_router = new Router($this->registerRoutes());
+        $loader = new Twig_Loader_Filesystem($this->getViewDir());
+        $this->_twig = new Twig_Environment($loader, array(
+            'cache' => $this->getCacheDir(),
+            'debug' => $this->isDebugMode() ? false : true
+        ));
     }
 
     /**
@@ -130,6 +140,14 @@ abstract class Application
     }
 
     /**
+     * Twigオブジェクトの取得
+     */
+    public function getTwig()
+    {
+        return $this->_twig;
+    }
+
+    /**
      * コントローラクラスディレクトリのパスを取得
      */
     public function getControllerDir()
@@ -159,6 +177,15 @@ abstract class Application
     public function getWebDir()
     {
         return $this->getRootDir() . '/web/';
+    }
+
+
+    /**
+     * キャッシュディレクトリの取得
+     */
+    public function getCacheDir()
+    {
+        return $this->getRootDir() . '/cache/';
     }
 
     /**
